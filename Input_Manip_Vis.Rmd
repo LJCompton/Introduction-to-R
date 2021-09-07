@@ -30,6 +30,9 @@ library(dplyr)
 library(ggplot2)
 #specify this to enable plotting to work
 options(bitmapType='cairo')
+library(assertthat)
+library(stringr)
+library(ottr)
 ```
 
 #import the rodent survey data
