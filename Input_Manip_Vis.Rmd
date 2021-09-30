@@ -1,0 +1,410 @@
+---
+title: "R Notebook to analyse an ecology survey"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+#In this Notebook, you will gain experience with importing data into R, manipulating and visualising it. 
+#This notebook is formative only and will therefore not contribute to your final module mark.
+
+Your Task
+Work through the code chunks in the following notebook to develop your understanding of how to import data into R, manipulate and plot it. 
+
+Follow the instructions for each code chunk, adding code where specified and using the exact variable names supplied. 
+You can add your own additional code chunks as needed to gain further practice as you work through the notebook.
+
+```{r}
+#run this first cell to clear R's brain, always a good first step in any notebook you write
+rm(list=ls())
+```
+
+#load the necessary libraries
+```{r}
+#run this cell to load the necessary libraries
+#a package for reading in data
+library(readr)
+#a package for data manipulation
+library(dplyr)
+#a package for plotting your data
+library(ggplot2)
+#specify this to enable plotting to work
+options(bitmapType='cairo')
+library(assertthat)
+library(stringr)
+library(ottr)
+```
+
+#import the rodent survey data
+```{r}
+#Type a command to read in the rodent survey data from the csv file `rodent_survey.csv` and assign it to a variable called `rodent_dat`
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+#check it has read in as a data frame.
+```{r}
+#Type a command to check that you have a data frame called `rodent_dat` and assign the result of this command to a variable called `structure_check`
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+```{r}
+# Run this chunk to check your answers
+. = ottr::check("tests/IMV_check_rodent_data.R")
+```
+
+#perform some basic checks on rodent_dat
+```{r}
+#Type a command to open the `rodent_dat` data frame in a nice table format in a new tab
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+```{r}
+#Type a command to find out the number of rows and columns in `rodent_dat`.
+#Assign the number of rows to a variable called `nrows`
+#Assign the number of columns to a variables called `ncols`
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+```{r}
+# Run this chunk to check your answers
+. = ottr::check("tests/IMV_check_rodent_dim.R")
+```
+
+#Now you are happy the data has read in correctly, you can perform basic data analysis, manipulation and visualisation
+
+## Investigation of animal Weight
+We are interested to work out how the weight of the animals varies by various
+factors, including species, sex and type of plot.
+
+Start by investigating the `weight` column of the data frame.  
+Use the `summary` function to give a numerical summary of the values in the `weight` column (not the whole data frame).
+
+```{r}
+#Use "summary" to show a summary of the "weight" column of the data frame and assign the result to a variable called `weight.summ`.
+#Hint: use select() to select a column by name.
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+```{r}
+# Run this chunk to check your answers
+. = ottr::check("tests/IMV_weight.summ.R")
+```
+
+The summary statistics have given us some idea of the distribution, but a histogram would be even better.
+Next, plot a histogram of the `weight` column data.
+
+```{r}
+#Plot a histogram of the values in the "weight" column.
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+The histogram does not look like a normal distribution (bell shaped curved).
+It looks as though there are different subgroups in these animals.  
+If we want to understand the weight values, we need to see what these subgroups are.
+
+#The difference between rodent species
+
+Your eye falls on the `species_id` column in the data frame.  This is a
+two-letter code for the species of the animal.  What species do we have in this dataset?
+
+Use the `table` function to display a table of the counts for each value of
+`species_id` and assign the result to a variable called `species.table`
+
+```{r}
+#Use "table" to show the counts for each categorical value of "species_id"
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+```{r}
+# Run this chunk to check your answers
+. = ottr::check("tests/IMV_species.count.R")
+```
+
+We might hypothesise that the different species will have different weight distributions.
+To investigate, we can start by making a box plot with a box for every species.
+
+Your box plot will have the different species on the x-axis, and the weights on the y-axis.
+
+To do this, we want a box plot of `weight` *as a function of* `species_id`
+
+```{r}
+#Show a box plot of "weight" as a function of "species_id"
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+As we suspected, there is a big difference in species weights. If your plot is
+right, you should see that the species `DS` is much heavier than the other
+rodents, on average.  This is *Dipodomys spectabilis*: the banner-tailed kangaroo
+rat that was excluded from some of the measurement plots.
+
+#Narrowing the focus to a single species
+
+It does not seem very useful for us to look at the weight for all rodents pooled
+together, so we will restrict our attention to species `PB`. `PB` is Chaetodipus
+Baileyi (https://en.wikipedia.org/wiki/Bailey's_pocket_mouse).
+
+To do this, use the `filter` command and a conditional to make a new data frame called `pb_only` that only includes
+the `PB` rodents.
+
+After you have made the new data frame, show the first six rows, to confirm you only have `PB` animals.
+
+```{r}
+#Use the filter command to make a new data frame called "pb_only" that
+#contains only the animals with "species_id" of "PB".
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+```{r}
+# Run this chunk to check your answers
+. = ottr::check("tests/IMV_pb.frame.R")
+```
+
+Now show the histogram of the weights from the new `pb_only` data frame.
+
+```{r}
+#- Plot a histogram of the "weight" column of "pb_only"
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+These weights should look a lot closer to a normal distribution (a bell shaped curve) than your
+original histogram of weights from the rodents of all species combined.
+
+Another factor that might affect weight is sex.
+
+Display a table of the counts for the different values of `sex` in the `pb_only`
+data frame and assign the result to a variable called `MF.table`.
+
+```{r}
+#- Display a table of the counts for each value of "sex" in "pb_only"
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+```{r}
+# Run this chunk to check your answers
+. = ottr::check("tests/IMV_gender.count.R")
+```
+
+Show a box plot of the weights of the PB animals, as a function of sex:
+
+```{r}
+#Show a box plot of "weight" as a function of "sex" for the PB animals.
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+Your plot should show that female PB rodents weigh less on average than male PB rodents.
+
+To take this effect into account, one simple thing we can do is to make a new data frame `pb_female` that only has the female PB rodents.
+
+```{r}
+#Make a new data frame called "pb_female" that contains only the female
+#animals from the "pb_only" data frame.
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+
+# Display the first six rows of the new "pb_female" data frame.
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+```{r}
+# Run this chunk to check your answers
+. = ottr::check("tests/IMV_pb.female.frame.R")
+```
+
+#Looking at the plot effect
+Next we consider whether the different type of plots in which the researchers measured the animals had an effect on
+their weight.
+
+First show a table of the counts for each value in the `plot_type` column of the
+`pb_female` data frame and assign the result to a variable called `plot.table`.
+
+```{r}
+#Display a table of the counts for each value of "plot_type" in "pb_female" and assign your result to a variable called `plot.table`
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+```{r}
+# Run this chunk to check your answers
+. = ottr::check("tests/IMV_plot.count.R")
+```
+
+Now make a box plot of `weight` as a function of `plot_type`, for the female PB rodents.
+
+```{r}
+#Show a box plot of "weight" as a function of "plot_type" for the female PB animals.
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+At first blush, there does not seem to be a convincing relationship between
+nutrition, as measured by weight, and the plot types.
+
+One explanation for this unconvincing boxplot result is that plot types do not
+influence nutrition of PB rats.
+
+Another possibility is that the `weight` value is not a very good indicator of
+nutrition.  Maybe we need to take the size of the animals into account, when
+looking at their weight.  Well nourished animals may be heavy for their size.
+
+The `hindfoot_length` column is one index of animal size.  We could try taking
+this into account.
+
+Let's start by looking at the relationship between `hindfoot_length` and `weight`.
+
+Make a scatter plot of `hindfoot_length` (on the x-axis) against `weight` (on the y-axis),
+for the female PB rodents.
+
+```{r}
+#Show a plot of "hindfoot_length" on the x axis against "weight" on the y axis for the female PB rodents.
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+We are going to try using `hindfoot_length` in a similar way to the use of
+height in the well-known calculation of body-mass index (https://en.wikipedia.org/wiki/Body_mass_index).
+
+Make a new variable called `rmi` for Rodent Mass Index.
+It will be the rodent weight divided by the square of the rodent hindfoot length.
+
+```{r}
+#Create a new variable "rmi" that has the "weight" values from the "pb_female" data frame, divided by the squared "hindfoot_length" values.
+#Hint: use mutate() to add this as an additional column to your `pb_female` dataframe
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+# Use "head" on this new data frame to show the first six values
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+```{r}
+# Run this chunk to check your answers
+. = ottr::check("tests/IMV_check_rmi.R")
+```
+
+Show a histogram of the `rmi` values in the `pb_female` data frame:
+
+```{r}
+#Show a histogram of the values in `rmi`
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+Is this new `rmi` variable a better predictor of nutrition?  It's difficult to
+know.  But we can ask whether it varies across the `plot_type`s more than the
+raw `weight`.
+
+Make a box plot of the `rmi` variable values as a function of the `plot_type`
+values for the female PB rodents.
+
+```{r}
+#Show a box plot of "rmi" values as a function of "plot_type" for the female PB animals.
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+It seems that the relationship of `rmi` to `plot_type` still does not look completely
+convincing.
+
+#Looking deeper at the effectivess of the plot types
+
+Thinking further, perhaps we have not got to the right data to answer our
+question.  We are interested in the different plot types - but let us think
+further about what we are interested in, exactly. For example, perhaps the key
+thing for PB rat nutrition is the exclusion of the much larger DS rats.
+Remember the DS rats are banner-tailed kangaroo rats, or "Krats" for short.
+
+But - did the Krat exclosure plot types really exclude Krats effectively?
+
+To investigate this, we can look at the cross-tabulation of `species_id` with
+the `plot_type` in which each rat was measured. If the Krat exclosure plots
+really excluded Krats, then we would expect there to be very few Krats measured
+in the Krat exclosure types.  
+
+For this question, we need to return to the full `rodent_dat` data frame.
+
+```{r}
+#Create a "plot_type" by "species_id" count table and store it as `ptype_by_species`
+#HINT: to do this, you can give a comma-separated list of the two columns to table()
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+```{r}
+# Run this chunk to check your answers
+. = ottr::check("tests/IMV_species.plot.count.R")
+```
+
+The table suggests that "Long-term Krat Exclosure"s do a reasonable but
+imperfect job of excluding Krats.
+
+#Restricting the analysis to 2 plot types
+
+Given that we are interested in the nutrition of PB rats in the absence of
+Krats, we can restrict our analysis of female PB rat weights to the "Control"
+and "Long-term Krat Exclosure" plot types.
+
+Make a new data frame called `pb_female_ctl_krat` that has the rows from
+`pb_female` for which the `plot_type` is *either* "Control" *or* "Long-term Krat
+Exclosure".
+
+```{r}
+#Make new data frame called "pb_female_ctl_krat" that has the rows from
+#"pb_female" for which "plot_type" is "Control" or "Long-term Krat Exclosure".
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+# Show the first six rows.
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+```{r}
+# Run this chunk to check your answers
+. = ottr::check("tests/IMV_pb.female.plot.frame.R")
+```
+
+To confirm that you have only have plot types "Control" and "Long-term Krat
+Exclosure" in your new data frame, and to remind yourself of what the
+differences in `rmi` values were, do a boxplot of the `rmi` values of the
+`pb_female_ctl_krat` data frame, as a function of the plot type.
+
+```{r}
+#Show a box plot of "rmi" values as a function of "plot_type" for the female PB animals in "pb_female_ctl_krat".
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+Now this result looks potentially interesting, but do we have a "real" difference in the rmi between the two plot types?
+
+To answer this, you could do a statistical test comparing the `rmi` values for the "Control" plot type to
+the `rmi` values for the "Long-term Krat Exclosure" plot type.
+
+You might want to come back to do this once you have learnt some more statistics on this course!
+
+In the meantime, it could be useful to get the summary statistics for the rmi data by plot type and assign the result to a variable called `rmi_by_plot`.
+```{r}
+#summarise the mean of `rmi` for the two plot types (control and long term krat exposure)
+#HINT 1: You can combine the use of summarise() and group_by()
+#HINT 2: there are NAs in the rmi column, so you will need to specify na.rm=TRUE for the mean() function
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+```{r}
+# Run this chunk to check your answers
+. = ottr::check("tests/IMV_rmi.plot.count.R")
+```
+
+This is the end of the notebook.
