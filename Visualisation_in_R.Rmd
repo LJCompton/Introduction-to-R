@@ -1,0 +1,112 @@
+---
+title: "R Notebook to visualise the compensation dataset"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+```{r}
+#clear R's brain, always a good first step in any notebook you write
+rm(list=ls())
+```
+
+#load the necessary libraries
+
+```{r}
+#a package for reading in data
+library(readr)
+#a package for plotting your data
+library(ggplot2)
+```
+
+#import the example compensation data
+```{r}
+Comp<- read_csv("compensation.csv")
+```
+
+#perform some basic checks on the data to check it has read in correctly
+```{r}
+View(Comp)
+```
+
+#SCATTERPLOTS
+
+#make basic plot with example data with grey background
+
+```{r}
+
+ggplot(Comp, aes(x = Root, y = Fruit)) + 
+  geom_point()
+
+```
+
+#customise the basic plot inc. background theme, point size, axis labels, colour of points
+
+#start with a background theme
+
+```{r}
+ggplot(Comp, aes(x = Root, y = Fruit)) + 
+  geom_point(size=3) + 
+  theme_bw() 
+
+```
+
+#add axis labels, and a categorical variable for colour and shape 
+```{r}
+ggplot(Comp, aes(x = Root, y = Fruit, colour=Grazing, shape = Grazing)) + 
+  geom_point(size=3) + 
+  theme_bw() + 
+  xlab("Root biomass") + 
+  ylab("Fruit production")
+```
+
+#BOXPLOTS
+```{r}
+#a basic black and white box plot
+ggplot(Comp, aes(x = Grazing, y = Fruit)) + 
+  geom_boxplot() + 
+  theme_bw() + 
+  xlab("Grazing treatment") + 
+  ylab("Fruit production")
+```
+
+```{r}
+#colour each plot according to the factor
+ggplot(Comp, aes(x = Grazing, y = Fruit, colour = Grazing)) + 
+  geom_boxplot() + 
+  theme_bw() + 
+  xlab("Grazing treatment") + 
+  ylab("Fruit production")
+```
+
+#HISTOGRAMS
+```{r}
+#see what the histogram looks like by default
+ggplot(Comp, aes(x = Fruit)) +
+  geom_histogram()
+```
+
+```{r}
+#change the bin width or the number of bins as suggested in R console output
+ggplot(Comp, aes(x = Fruit)) +
+  #geom_histogram(bins=10)
+  geom_histogram(binwidth=15)
+```
+
+#A matrix of histograms
+```{r}
+#produce a matrix of graphs according to a categorical variable
+ggplot(Comp, aes(x = Fruit)) +
+  geom_histogram(binwidth=15) +
+  facet_wrap(~Grazing)
+```
+
+#save your plot
+```{r}
+ggsave("LatticeHistogram.png")
+```
+
+```{r}
+?ggsave()
+```
+
