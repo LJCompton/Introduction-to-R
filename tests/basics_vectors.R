@@ -23,13 +23,13 @@ test = list(
 	ottr::TestCase$new(
       name = "vectors_4",
       code = {
-        expect_true(length(vec1_subset) == 2)
+        testthat::expect_true(length(vec1_subset) == 2)
       }
     ),
 	ottr::TestCase$new(
       name = "vectors_5",
       code = {
-        expect_true(all(vec1_subset == c(10, 15)))
+        testthat::expect_true(all(vec1_subset == c(10, 15)))
       }
     ),
 	ottr::TestCase$new(
