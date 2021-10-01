@@ -1,0 +1,198 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. 
+When you execute code within the notebook, the results appear beneath the code. 
+
+Your Task
+Work through the code chunks in the following notebook to develop your understanding of how to create and manipulate variables and different types of data object in the R programming language. 
+
+Follow the instructions for each code chunk, adding code where specified and using the exact variable names supplied. 
+You can add your own additional code chunks as needed to gain further practice as you work through the notebook.
+
+```{r}
+#run this first cell to clear R's brain, always a good first step in any notebook you write
+rm(list=ls())
+```
+
+First, run the following chunk to load the necessary libraries.
+
+```{r}
+library(assertthat)
+library(stringr)
+library(ottr)
+```
+
+#CREATING VARIABLES AND ASSIGNING VALUES 
+
+Add code to the chunk below that does the following:
+* Create an integer variable called `my_integer` and assign it a value of 7.
+* Create a floating point (decimal) variable called `my_decimal` and assign it any number you choose.
+* Create a string variable called `my_string` and assign it any value you like. 
+
+```{r}
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+Remember you can print out the value of your variables at any point by listing them.
+
+```{r}
+#run this chunk to see the values of your variables
+my_integer
+my_decimal
+my_string
+```
+
+
+```{r}
+# Run this chunk to check your answers
+. = ottr::check("tests/basics_data_type.R")
+```
+
+#BASIC MANIPULATION OF VARIABLES
+
+Add code to the chunk below that does the following:
+* Create a variable called `var3` by multiplying `var1` by `var2`
+* Create a variable called `var4` by dividing `var2` by `var1`
+
+```{r}
+var1 <- 10
+var2 <- 5
+
+################## ADD YOUR CODE UNDER THIS LINE #######
+
+```
+
+```{r}
+# Run this chunk to check your answers
+. = ottr::check("tests/basics_manip.R")
+```
+
+#CALLING EXTERNAL FUNCTIONS
+
+As with Python, R and its associated packages have a range of functions that you can call upon when needed.
+
+Add code to the chunk below that does the following:
+
+* Set a variable `num1` to the absolute value of -78.2. To do this, use the function abs(...)
+* Set a variable `len1` to the length of variable `str2`. To do this, use the function str_length(..) which is part of the stringr package.
+* Convert `num1` from a number to a string variable and set the answer to a variable called `str3`. To do this, use the function toString()
+* Convert `str3` back to a number and set the answer to a variable called `num2`. To do this, use the function as.numeric()
+
+```{r}
+str2 = "Hello everyone"
+################## ADD YOUR CODE UNDER THIS LINE ###
+
+```
+
+```{r}
+# Run this chunk to check your answers
+. = ottr::check("tests/basics_extfunct.R")
+```
+
+#COLLECTIONS OF OBJECTS IN R
+
+Now let's practice using 4 important data types in R, including how to access the elements within them.
+
+#The Vector: a one-dimensional set of items of the same type.
+
+Add code to the chunk below that does the following:
+
+* Create a vector called `vec1` containing the integers from 1 to 20. To do this, use c() and remember that x:y means the numbers from x to y
+* Access the 5th element in the vector and assign it to a variable called `val5`. Remember that R is indexed from 1, so the 5th element is element number 5.
+* Create a vector called `vec1_crop` containing all the elements in `vec1` apart from the last element. To do this, remember to use negative indexing.
+* Create a vector called `vec1_subset` containing elements 10 and 15 from `vec1`. To do this, remember to use c().
+* Create a vector called `vec1_lower` containing elements from `vec1` whose value is less than 6. To do this, remember to use a conditional statement.
+
+```{r}
+################## ADD YOUR CODE UNDER THIS LINE ###
+
+```
+
+```{r}
+# Run this chunk to check your answers
+. = ottr::check("tests/basics_vectors.R")
+```
+
+#The Matrix: a two-dimensional set of items of the same type.
+
+Add code to the chunk below that does the following:
+
+* Create a 3 x 3 matrix called `matrix3` containing the values 3, 6, 9 in row 1; 12, 15 and 18 in row 2; 21, 24 and 27 in row 3.
+* Access the element in row 2, column 3 and assign it to a variable called `matnum1`.
+* Access the third column of the matrix and assign it to a vector called `col3`. To do this, remember if you do not specify a range, R will give you all the rows (or all the columns).
+
+```{r}
+################## ADD YOUR CODE UNDER THIS LINE ###
+
+```
+
+```{r}
+# Run this chunk to check your answers
+. = ottr::check("tests/basics_matrix.R")
+```
+
+#The List: a one-dimensional collection of objects that can be of different types.
+
+Add code to the chunk below that does the following:
+
+* Create a single list called `mylist` with 9 elements, each a single word (in order) from the phrase "The quick brown fox jumps over the lazy dog."
+* Extract the 5th element of the list in the form of another list called `onewordlist`.
+* Extract the 7th element of the list in the form of the individual element (not a list) and call it `ele_seven`.
+* Combine the even numbered elements of the list into a vector of strings called `even_vec`. To do this, use the combine function, c()
+
+```{r}
+################## ADD YOUR CODE UNDER THIS LINE ###
+
+```
+
+```{r}
+# Run this chunk to check your answers
+. = ottr::check("tests/basics_list.R")
+```
+
+#The Data Frame: a Tables of items of different types, which can be given names and accessed by name
+
+Add code to the chunk below that does the following:
+
+* Create a data frame called `pop_contest` that has two columns called "language" and "popularity" and contains the following data structure:
+language    popularity
+Linux       25
+Python      35
+R           40
+* Have a look at your data frame using the View() function. You will see your data frame graphically displayed in a new tab - nice!
+* Extract the value in row 2, column 2 and assign it to a variable called `Pyscore`
+* Create a vector called `scores` containing the popularity score for each language from column 2. To do this, you can refer to the column by number or by name.
+* Extract a data frame called `highscores` containing only those rows where the score is equal to 35. To do this, you will need to use a conditional test.
+
+```{r}
+################## ADD YOUR CODE UNDER THIS LINE ###
+
+```
+
+```{r}
+# Run this chunk to check your answers
+. = ottr::check("tests/basics_dataframe.R")
+```
+
+#Finally, get some useful summary statistics about the data in your `pop_contest` data frame.
+
+Add code to the chunk below that does the following:
+
+* Use the summary() function on your `pop_contest` data frame.
+ 
+```{r}
+################## ADD YOUR CODE UNDER THIS LINE ###
+
+```
+
+You might like to try out knitting your document together as html now to see all the work you have done in the friendly html format.
+
+Hopefully, this has given you some experience with the RStudio environment as well as objects, variables, data types and functions in the R language. 
+
+You should now have everything you need to tackle the next lesson, where we will learn how to import and manipulate data in R.
+
+This is the end of the notebook.
