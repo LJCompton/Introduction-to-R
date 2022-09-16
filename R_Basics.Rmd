@@ -25,6 +25,13 @@ library(stringr)
 library(ottr)
 ```
 
+Second, run this chunk to make sure graphical output will work.
+
+```{r}
+#specify this to enable plotting to work
+options(bitmapType='cairo')
+```
+
 #CREATING VARIABLES AND ASSIGNING VALUES 
 
 Add code to the chunk below that does the following:
